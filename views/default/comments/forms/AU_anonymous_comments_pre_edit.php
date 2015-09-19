@@ -1,4 +1,7 @@
 <?php
+
+namespace AU\AnonymousComments;
+
 /**
  *
  *		This view prepends the comment form, displays the notice letting users know comments are moderated
@@ -8,7 +11,7 @@
  * 		to properly submit approve/delete
  *
  */
-elgg_load_js('AU_anonymous_comments');
+elgg_require_js('anonymous_comments');
 
 if($vars['annotation_name'] == "generic_comment" && is_numeric($vars['guid'])){
 
@@ -28,12 +31,12 @@ if($mc_notice_count != 1){
 	$mc_notice_count = 1;
 	
 
-	if((AU_anonymous_comments_is_moderated($entity_guid) && !elgg_is_logged_in()) || (AU_anonymous_comments_is_moderated($entity_guid) && $comments_to_moderate > 0 && $entity->owner_guid == elgg_get_logged_in_user_guid())){
+	if((is_moderated($entity) && !elgg_is_logged_in()) || (is_moderated($entity) && $comments_to_moderate > 0 && $entity->owner_guid == elgg_get_logged_in_user_guid())){
 		echo "<div class=\"generic_comment mc_notice\">";
 	}
 
 
-	if(elgg_get_logged_in_user_guid() == $entity->owner_guid && AU_anonymous_comments_is_moderated($entity_guid) && $comments_to_moderate > 0){
+	if(elgg_get_logged_in_user_guid() == $entity->owner_guid && is_moderated($entity) && $comments_to_moderate > 0){
 		?>
 		<div class="mc_moderation_control">
 			<form id="mcApprovalForm"
@@ -60,7 +63,7 @@ if($mc_notice_count != 1){
 		<?php
 	} 
 
-	if((AU_anonymous_comments_is_moderated($entity_guid) && !elgg_is_logged_in()) || (AU_anonymous_comments_is_moderated($entity_guid) && $comments_to_moderate > 0 && $entity->owner_guid == elgg_get_logged_in_user_guid())){
+	if((is_moderated($entity) && !elgg_is_logged_in()) || (is_moderated($entity_guid) && $comments_to_moderate > 0 && $entity->owner_guid == elgg_get_logged_in_user_guid())){
 		echo "<div class=\"mc_clear_div\"></div>";
 		echo "</div>";
 	}
