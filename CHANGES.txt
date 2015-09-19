@@ -1,0 +1,7 @@
+== VERSION HISTORY ==
+
+1.0 -
+- combines moderated_comments and speak_freely plugins
+- adds required email field that is only sent in notifications, along with the IP address of the poster. These are not permanently stored - they are to help the owner contact the poster by email if needed.
+- implements stopforumspam integration to prevent known spammers from adding comments
+- prevents saving of URLs or other rich text formatting beyond simple bold, italic, etc.
