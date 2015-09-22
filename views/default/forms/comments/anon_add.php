@@ -40,19 +40,6 @@ echo elgg_view('input/longtext', array(
 ));
 echo '</div>';
 
-// if we have set recaptcha then display the output
-if (elgg_get_plugin_setting('recaptcha', PLUGIN_ID) == "yes") {
-	$publickey = elgg_get_plugin_setting('public_key', PLUGIN_ID);
-	$lang = get_language();
-	$recaptcha_style = elgg_get_plugin_setting('recaptcha_style', PLUGIN_ID);
-	if (!in_array($recaptcha_style, array('dark', 'light'))) {
-		$recaptcha_style = "light"; // set default	
-	}
-
-	echo '<div class="g-recaptcha" data-sitekey="' . $publickey . '" data-theme="' . $recaptcha_style . '"></div>';
-	echo '<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=' . $lang . '"></script>';
-}
-
 echo '<div class="elgg-foot">';
 echo elgg_view('input/hidden', array(
 	'name' => 'entity_guid',

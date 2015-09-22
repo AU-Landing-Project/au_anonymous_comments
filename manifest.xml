@@ -15,6 +15,12 @@
         <type>elgg_release</type>
         <version>1.9</version>
     </requires>
+    
+    <suggests>
+        <type>plugin</type>
+        <name>elgg_recaptcha</name>
+        <version>1.0.1</version>            
+    </suggests>
   
     <category>Comments</category>
 </plugin_manifest>

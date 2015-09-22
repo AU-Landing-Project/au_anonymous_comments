@@ -96,3 +96,39 @@ function permissions_check($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+/**
+ * This function checks if the entity is being moderated, if so we need to count
+ * and return the number of APPROVED comments, not total comments
+ * called by commments:count plugin hook
+ * 
+ * @param type $hook
+ * @param type $type
+ * @param type $returnvalue
+ * @param type $params
+ * @return int
+ */
+function comment_count_hook($hook, $type, $return, $params) {
+	if (!is_moderated($params['entity'])) {
+		return $return;
+	}
+	
+	if ($params['entity']->canEdit()) {
+		// can edit the content? can moderate
+		return $return; 
+	}
+
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $params['entity']->guid,
+		'count' => true
+	);
+	
+	$total = elgg_get_entities($options);
+	
+	$options['metadata_names'] = array('au_moderated_comments_unapproved');
+	$unapproved = elgg_get_entities_from_metadata($options);
+
+	return (int) ($total - $unapproved);
+}

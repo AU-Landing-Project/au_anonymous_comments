@@ -5,7 +5,7 @@
  - protect anonymous user pages with admin_gatekeeper
  - remove custom settings for styling anonymous user - use core profile/settings/avatar page
  - remove user hover menu for anonymous entirely (as of Elgg 1.11)
- - update to reCaptcha 2.0
+ - removes recaptcha (use recaptcha plugin)
  - optional add to river setting
 
 1.0 -

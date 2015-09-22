@@ -2,6 +2,9 @@
 
 namespace AU\AnonymousComments;
 
+/**
+ * page setup - protect anon user owned pages
+ */
 function pagesetup() {
 	$user = get_anon_user();
 	$page_owner = elgg_get_page_owner_entity();

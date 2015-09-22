@@ -8,7 +8,6 @@ const PLUGIN_VERSION = 20150918;
 require_once __DIR__ . '/lib/hooks.php';
 require_once __DIR__ . '/lib/events.php';
 require_once __DIR__ . '/lib/functions.php';
-require_once __DIR__ . '/vendor/autoload.php';
 
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 
@@ -32,10 +31,6 @@ function init() {
 	
 	//register action to save our anonymous comments
 	elgg_register_action("comments/anon_add", __DIR__ . "/actions/comments/anon_add.php", 'public');
-	
-	//register action to save our plugin settings
-	// @todo custom save
-	elgg_register_action("AU_anonymous_comments_settings", elgg_get_plugins_path() . "AU_anonymous_comments/actions/AU_anonymous_comments_settings.php", 'admin');
 	
 	// register plugin hook to monitor comment counts - return only the count of approved comments
 	elgg_register_plugin_hook_handler('comments:count', 'all', __NAMESPACE__ . '\\comment_count_hook', 1000); 
