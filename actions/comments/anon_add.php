@@ -81,10 +81,6 @@ $comment->description = $comment_text;
 $comment->owner_guid = $user->getGUID();
 $comment->container_guid = $entity->getGUID();
 $comment->access_id = $entity->access_id;
-// flag for moderation
-if (is_moderated($entity)) {
-	$comment->au_moderated_comments_unapproved = 1;
-}
 $guid = $comment->save();
 
 if (!$guid) {
@@ -143,8 +139,13 @@ if (elgg_get_plugin_setting('add_to_river', PLUGIN_ID) == 'yes') {
 	));
 }
 
+if (is_moderated($entity)) {
+	// disable the comment until approved
+	$comment->disable();
+}
+
 elgg_pop_context();
 elgg_clear_sticky_form('comments/anon_add');
-system_message(elgg_echo('generic_comment:posted'));
+system_message(elgg_echo('AU_anonymous_comments:comment_success'));
 
 forward(REFERER);

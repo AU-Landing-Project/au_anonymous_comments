@@ -17,17 +17,18 @@ function init() {
 	elgg_extend_view('css/elgg','anonymous_comments/css');
 	
 	// extend the form view to present a comment form to a logged out user
-	elgg_extend_view('page/elements/comments', 'comments/forms/AU_anonymous_comments_post_edit');
+	elgg_extend_view('page/elements/comments', 'anonymous_comments/pre_comments', 0);
+	elgg_extend_view('page/elements/comments', 'anonymous_comments/post_comments');
 	
 	//add override for anonymous user profile
-	elgg_extend_view('profile/details', 'profile/AU_anonymous_comments_pre_userdetails', 501);
+	elgg_extend_view('profile/details', 'profile/anon_user_details', 501);
 	
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', __NAMESPACE__ . '\\hover_menu_hook', 1000);
 	elgg_register_plugin_hook_handler('view_vars', 'icon/user/default', __NAMESPACE__ . '\\user_icon_vars');
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\anon_email_hook', 0);
 	
 	 //register action to approve/delete comments
-	elgg_register_action("annotation/review", elgg_get_plugins_path() . "AU_anonymous_comments/actions/annotation/review.php"); 
+	elgg_register_action("comments/moderate", __DIR__ . "/actions/comments/moderate.php"); 
 	
 	//register action to save our anonymous comments
 	elgg_register_action("comments/anon_add", __DIR__ . "/actions/comments/anon_add.php", 'public');

@@ -113,11 +113,15 @@ function comment_count_hook($hook, $type, $return, $params) {
 		return $return;
 	}
 	
-	if ($params['entity']->canEdit()) {
-		// can edit the content? can moderate
+	if (!$params['entity']->canEdit()) {
 		return $return; 
 	}
 
+	// can edit the content? can moderate
+	// set a flag for us to see disabled comments
+	$show_hidden = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
+	
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'comment',
@@ -125,10 +129,10 @@ function comment_count_hook($hook, $type, $return, $params) {
 		'count' => true
 	);
 	
-	$total = elgg_get_entities($options);
+	$total = (int) elgg_get_entities($options);
 	
-	$options['metadata_names'] = array('au_moderated_comments_unapproved');
-	$unapproved = elgg_get_entities_from_metadata($options);
+	// restore the flag
+	access_show_hidden_entities($show_hidden);
 
-	return (int) ($total - $unapproved);
+	return $total;
 }
