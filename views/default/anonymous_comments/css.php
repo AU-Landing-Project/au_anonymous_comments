@@ -21,7 +21,7 @@
 	color: red;
 }
 
-.generic_comment.unreviewed {
+.moderated-comment {
 	background-color: #F7EDED;
 	border: 1px solid red !important;
 	padding: 15px;

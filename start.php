@@ -26,6 +26,7 @@ function init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', __NAMESPACE__ . '\\hover_menu_hook', 1000);
 	elgg_register_plugin_hook_handler('view_vars', 'icon/user/default', __NAMESPACE__ . '\\user_icon_vars');
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\anon_email_hook', 0);
+	elgg_register_plugin_hook_handler('register', 'menu:entity', __NAMESPACE__ . '\\comment_entity_menu', 1000);
 	
 	 //register action to approve/delete comments
 	elgg_register_action("comments/moderate", __DIR__ . "/actions/comments/moderate.php"); 

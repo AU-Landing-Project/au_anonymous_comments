@@ -109,14 +109,9 @@ else {
 	$approveURL = elgg_normalize_url("auac/approve/{$token}");
 	$deleteURL = elgg_normalize_url("auac/delete/{$token}");
 
-	notify_user($entity->owner_guid, $user->guid, elgg_echo('AU_anonymous_comments:email:subject'), sprintf(
-					elgg_echo('AU_anonymous_comments:email:body'), $entity->title, $user->name . " (name: $anon_name, email:$anon_email, IP: $ip_address )", $comment_text, $entity->getURL(), $approveURL, $deleteURL
-			)
-	);
-	
 	notify_user($owner->guid, $user->guid, elgg_echo('AU_anonymous_comments:email:subject', array(), $owner->language), elgg_echo('AU_anonymous_comments:email:body', array(
 		$entity->title,
-		$anon_name . " ({$anon_email})",
+		$anon_name . " ({$anon_email}, IP:" . get_ip() . ")",
 		$comment_text,
 		$entity->getURL(),
 		$approveURL,

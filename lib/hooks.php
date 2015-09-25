@@ -136,3 +136,38 @@ function comment_count_hook($hook, $type, $return, $params) {
 
 	return $total;
 }
+
+/**
+ * modify the entity menu for unapproved comments
+ * 
+ * @param type $hook
+ * @param type $type
+ * @param array $return
+ * @param array $params
+ * @return array
+ */
+function comment_entity_menu($hook, $type, $return, $params) {
+	if (!($params['entity'] instanceof \ElggComment)) {
+		return $return;
+	}
+	
+	if ($params['entity']->isEnabled()) {
+		return $return;
+	}
+	
+	foreach ($return as $key => $item) {
+		if ($item->getName() == 'delete') {
+			$delete_url = elgg_normalize_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=delete');
+			$return[$key]->setHref(elgg_add_action_tokens_to_url($delete_url));
+		}
+		else {
+			unset($return[$key]);
+		}
+	}
+	
+	$href = elgg_add_action_tokens_to_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=approve');
+	$item = new \ElggMenuItem('approve', elgg_echo('Au_anonymous_comments:approve'), $href);
+	$return[] = $item;
+	
+	return array_values($return);
+}
