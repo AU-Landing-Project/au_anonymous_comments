@@ -31,24 +31,6 @@
 	-webkit-border-radius: 5px;
 }
 
-.generic_comment.mc_notice {
-	color: red;
-	font-weight: bold;	
-	padding-bottom: 15px;
-	margin-top: 10px;
-}
-
-.generic_comment_icon {
-	display: block;
-	width: 40px;	
-}
-
 .moderate_options {
 	margin-top: 15px;	
-}
-
-.mc_moderation_control {
-	float: left;
-	width: 180px;
-	padding: 5px;	
 }

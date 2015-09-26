@@ -1,12 +1,14 @@
 == VERSION HISTORY ==
 
 2.0 ():
- - upgrade for Elgg 1.9
+ - upgrade for Elgg 1.9+
  - protect anonymous user pages with admin_gatekeeper
  - remove custom settings for styling anonymous user - use core profile/settings/avatar page
  - remove user hover menu for anonymous entirely (as of Elgg 1.11)
  - removes recaptcha (use recaptcha plugin)
  - optional add to river setting
+ - much code cleanup
+ - more secure email moderation links
 
 1.0 -
 - combines moderated_comments and speak_freely plugins
