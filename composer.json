@@ -1,5 +1,5 @@
 {
-    "name": "au/AU_anonymous_comments",
+    "name": "au/au_anonymous_comments",
     "type": "elgg-plugin",
     "description": "Provides the ability for anonymous (not logged in) users to comment on public content and for that content to be moderated by the owner.",
     "homepage": "https://github.com/AU-Landing-Project/AU_anonymous_comments",
