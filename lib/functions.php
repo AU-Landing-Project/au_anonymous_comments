@@ -133,25 +133,7 @@ function get_token($comment) {
 	}
 	
 	// generate a token for this comment
-	$token = sha1(uniqid('auac' . $token->guid));
+	$token = sha1(uniqid('auac' . $comment->guid));
 	$comment->__anonymous_comment_token = $token;
 	return $token;
-}
-
-//
-// sets htmlawed to filter more if user is not logged in
-//
-//@todo - this doesn't work
-function htmlawed_init_mod() {
-	global $CONFIG;
-	$CONFIG->htmlawed_config = array(
-		'safe' => true,
-		'deny_attribute' => 'class, on*',
-		'hook_tag' => 'htmlawed_hook',
-		'anti_link_spam' => array('`.`', ''),
-		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
-		'elements' => 'b, i, ul,li, u, blockquote, p, strong, em, s, ol, br,h1,h2,h3'
-	);
-
-	elgg_register_plugin_hook_handler('validate', 'input', 'htmlawed_filter_tags', 1);
 }

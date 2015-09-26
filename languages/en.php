@@ -7,6 +7,7 @@ return array(
 	'AU_anonymous_comments:email' => "Email address",
 	'AU_anonymous_comments:email:help' => "Note: Only shown to the creator of the post",
 	'AU_anonymous_comments:email_blank' => "You must enter an email address.",
+	'AU_anonymous_comments:select:all' => "Select all",
 	'AU_anonymous_comments:setting:add_to_river' => "Add anonymous comments to the site activity?",
 	'AU_anonymous_comments:profile_view' => "You are not permitted to view that profile.",
 	'AU_anonymous_comments:profile:warning' => "	<h2>Warning</h2>

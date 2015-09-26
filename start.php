@@ -28,17 +28,38 @@ function init() {
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\anon_email_hook', 0);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', __NAMESPACE__ . '\\comment_entity_menu', 1000);
 	
+	// override permissions for the specific context
+	elgg_register_plugin_hook_handler('permissions_check', 'all', __NAMESPACE__ . '\\permissions_check');	
+	
+	// register plugin hook to monitor comment counts - return only the count of approved comments
+	elgg_register_plugin_hook_handler('comments:count', 'all', __NAMESPACE__ . '\\comment_count_hook', 1000); 
+	
 	 //register action to approve/delete comments
 	elgg_register_action("comments/moderate", __DIR__ . "/actions/comments/moderate.php"); 
 	
 	//register action to save our anonymous comments
 	elgg_register_action("comments/anon_add", __DIR__ . "/actions/comments/anon_add.php", 'public');
 	
-	// register plugin hook to monitor comment counts - return only the count of approved comments
-	elgg_register_plugin_hook_handler('comments:count', 'all', __NAMESPACE__ . '\\comment_count_hook', 1000); 
-		
-	// override permissions for the specific context
-	elgg_register_plugin_hook_handler('permissions_check', 'all', __NAMESPACE__ . '\\permissions_check');	
-	
 	elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup');
+	
+	elgg_register_page_handler('auac', __NAMESPACE__ . '\\auac_pagehandler');
+}
+
+
+function auac_pagehandler($page) {
+	switch ($page[0]) {
+		case 'approve':
+			echo elgg_view('resources/anonymous_comments/approve', array(
+				'page' => $page
+			));
+			break;
+		
+		case 'delete':
+			echo elgg_view('resources/anonymous_comments/delete', array(
+				'page' => $page
+			));
+			break;
+	}
+	
+	return false;
 }

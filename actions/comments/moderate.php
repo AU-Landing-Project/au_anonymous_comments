@@ -21,6 +21,7 @@ foreach ($guids as $g) {
 		continue;
 	}
 	
+	$ia = elgg_set_ignore_access(true);
 	if ($review == 'delete' || $review == elgg_echo('AU_anonymous_comments:delete_checked')) {
 		$comment->delete();
 		$deleted = true;
@@ -28,8 +29,10 @@ foreach ($guids as $g) {
 	
 	if ($review == 'approve' || $review == elgg_echo('AU_anonymous_comments:approve_checked')) {
 		$comment->enable();
+		$comment->__anonymous_comment_token = null;
 		$approved = true;
 	}
+	elgg_set_ignore_access($ia);
 }
 
 if ($deleted) {

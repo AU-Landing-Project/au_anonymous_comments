@@ -4,6 +4,9 @@ namespace AU\AnonymousComments;
 
 elgg_make_sticky_form('comments/anon_add');
 
+// add in some extra htmlawed rules for non logged in commenters
+elgg_register_plugin_hook_handler('htmlawed', 'config', __NAMESPACE__ . '\\htmlawed_config');
+
 $anon_name = get_input('anon_name');
 $anon_email = get_input('anon_email');
 $entity_guid = (int) get_input('entity_guid', 0, false);
@@ -106,8 +109,8 @@ if (!is_moderated($entity)) {
 }
 else {
 	$token = get_token($comment);
-	$approveURL = elgg_normalize_url("auac/approve/{$token}");
-	$deleteURL = elgg_normalize_url("auac/delete/{$token}");
+	$approveURL = elgg_normalize_url("auac/approve/{$comment->guid}/{$token}");
+	$deleteURL = elgg_normalize_url("auac/delete/{$comment->guid}/{$token}");
 
 	notify_user($owner->guid, $user->guid, elgg_echo('AU_anonymous_comments:email:subject', array(), $owner->language), elgg_echo('AU_anonymous_comments:email:body', array(
 		$entity->title,

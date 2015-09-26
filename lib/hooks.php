@@ -25,14 +25,14 @@ function hover_menu_hook($hook, $type, $return, $params) {
 				'profile:edit',
 				'settings:edit'
 			);
-			
+
 			foreach ($return as $key => $item) {
 				if (in_array($item->getName(), $allowed)) {
 					continue;
 				}
 				unset($return[$key]);
 			}
-			
+
 			$return = array_values($return);
 		}
 	}
@@ -50,14 +50,14 @@ function hover_menu_hook($hook, $type, $return, $params) {
  * @return array();
  */
 function user_icon_vars($hook, $type, $return, $params) {
-	
+
 	$user = ($params['entity'] instanceof \ElggUser) ? $params['entity'] : elgg_get_logged_in_user_entity();
 	$anon_user = get_anon_user();
-	
+
 	if ($user->guid == $anon_user->guid) {
 		$return['use_hover'] = false;
 	}
-	
+
 	return $return;
 }
 
@@ -112,25 +112,25 @@ function comment_count_hook($hook, $type, $return, $params) {
 	if (!is_moderated($params['entity'])) {
 		return $return;
 	}
-	
+
 	if (!$params['entity']->canEdit()) {
-		return $return; 
+		return $return;
 	}
 
 	// can edit the content? can moderate
 	// set a flag for us to see disabled comments
 	$show_hidden = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
-	
+
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $params['entity']->guid,
 		'count' => true
 	);
-	
+
 	$total = (int) elgg_get_entities($options);
-	
+
 	// restore the flag
 	access_show_hidden_entities($show_hidden);
 
@@ -150,24 +150,39 @@ function comment_entity_menu($hook, $type, $return, $params) {
 	if (!($params['entity'] instanceof \ElggComment)) {
 		return $return;
 	}
-	
+
 	if ($params['entity']->isEnabled()) {
 		return $return;
 	}
-	
-	foreach ($return as $key => $item) {
-		if ($item->getName() == 'delete') {
-			$delete_url = elgg_normalize_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=delete');
-			$return[$key]->setHref(elgg_add_action_tokens_to_url($delete_url));
-		}
-		else {
-			unset($return[$key]);
-		}
+
+	$entity = $params['entity']->getContainerEntity();
+	if ($entity && $entity->canEdit()) {
+		$return = array();
+
+		$href = elgg_add_action_tokens_to_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=approve');
+		$item = new \ElggMenuItem('approve', elgg_echo('Au_anonymous_comments:approve'), $href);
+		$return[] = $item;
+
+		$delete_url = elgg_add_action_tokens_to_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=delete');
+		$item = new \ElggMenuItem('delete', elgg_view_icon('delete'), $delete_url);
+		$item->setConfirmText(elgg_echo('question:areyousure'));
+		$return[] = $item;
+
+		$return = array_values($return);
 	}
 	
-	$href = elgg_add_action_tokens_to_url('action/comments/moderate?guid[]=' . $params['entity']->guid . '&review=approve');
-	$item = new \ElggMenuItem('approve', elgg_echo('Au_anonymous_comments:approve'), $href);
-	$return[] = $item;
+	return $return;
+}
+
+
+function htmlawed_config($hook, $type, $return, $params) {
+	$config = array(
+		'safe' => true,
+		'deny_attribute' => 'class, on*',
+		'anti_link_spam' => array('`.`', ''),
+		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
+		'elements' => 'b, i, ul,li, u, blockquote, p, strong, em, s, ol, br,h1,h2,h3'
+	);
 	
-	return array_values($return);
+	return array_merge($return, $config);
 }
