@@ -1,7 +1,7 @@
 == VERSION HISTORY ==
 
-2.0 ():
- - upgrade for Elgg 1.9+
+2.0 (09/25/2015):
+ - upgrade for Elgg 1.9
  - protect anonymous user pages with admin_gatekeeper
  - remove custom settings for styling anonymous user - use core profile/settings/avatar page
  - remove user hover menu for anonymous entirely (as of Elgg 1.11)
