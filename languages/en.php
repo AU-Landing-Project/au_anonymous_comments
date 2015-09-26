@@ -2,6 +2,7 @@
 
 return array(
 	'AU_anonymous_comments:no_URLs_allowed' => "Too many URLs in the comment: your comment was not saved",
+	'AU_anonymous_comments:display_name' => "Anonymous",
 	'AU_anonymous_comments:name' => "Name",
 	'AU_anonymous_comments:name_blank' => "You must enter a name.",
 	'AU_anonymous_comments:email' => "Email address",

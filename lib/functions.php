@@ -79,8 +79,8 @@ function set_anonymous_user() {
 		$anon_user->email = "AU_anonymous_comments_user" . $i . "@example.com";
 		$anon_user->name = elgg_echo('AU_anonymous_comments:display_name');
 		$anon_user->access_id = ACCESS_PUBLIC;
-		$anon_user->salt = _elgg_generate_password_salt();
-		$anon_user->password = _elgg_generate_password_salt(); // doesn't need to match, we don't want people logging in anyway
+		$anon_user->salt = '';
+		$anon_user->password = ''; // doesn't need to match, we don't want people logging in anyway
 		$anon_user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 		$anon_user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
 		$anon_user->save();

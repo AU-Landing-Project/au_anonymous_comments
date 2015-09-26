@@ -51,7 +51,7 @@ function hover_menu_hook($hook, $type, $return, $params) {
  */
 function user_icon_vars($hook, $type, $return, $params) {
 
-	$user = ($params['entity'] instanceof \ElggUser) ? $params['entity'] : elgg_get_logged_in_user_entity();
+	$user = ($params['vars']['entity'] instanceof \ElggUser) ? $params['vars']['entity'] : elgg_get_logged_in_user_entity();
 	$anon_user = get_anon_user();
 
 	if ($user->guid == $anon_user->guid) {
