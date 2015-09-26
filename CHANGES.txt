@@ -1,5 +1,8 @@
 == VERSION HISTORY ==
 
+2.0.1 (09/26/2015):
+ - compatibility 1.9 through 1.12
+
 2.0.0 (09/25/2015):
  - upgrade for Elgg 1.9
  - protect anonymous user pages with admin_gatekeeper
